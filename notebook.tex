@@ -1,0 +1,960 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{AE on MNIST}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{n}{clear}\PY{p}{;}\PY{n}{clc}\PY{p}{;}\PY{n}{close} \PY{n}{all}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c}{\PYZpc{}\PYZpc{} Read tarining and training}
+        \PY{k}{if} \PY{o}{\PYZti{}}\PY{n}{exist}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{MNIST\PYZus{}train\PYZus{}img.mat\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{file\PYZsq{}}\PY{p}{)}
+            \PY{n}{images}\PY{p}{=}\PY{n}{loadMNISTImages}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{train\PYZhy{}images.idx3\PYZhy{}ubyte\PYZsq{}}\PY{p}{)}\PY{p}{;}
+            \PY{n}{lb}\PY{p}{=}\PY{n}{loadMNISTLabels}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{train\PYZhy{}labels.idx1\PYZhy{}ubyte\PYZsq{}}\PY{p}{)}\PY{p}{;}
+            \PY{n}{train\PYZus{}images}\PY{p}{=}\PY{n+nb}{reshape}\PY{p}{(}\PY{n}{images}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{n+nb}{size}\PY{p}{(}\PY{n}{images}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}\PY{n+nb}{size}\PY{p}{(}\PY{n}{images}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{]}\PY{p}{)}\PY{p}{;}
+            \PY{n}{train\PYZus{}labels}\PY{p}{=}\PY{n}{lb}\PY{o}{\PYZsq{}}\PY{p}{;}
+            \PY{n}{save}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{MNIST\PYZus{}train\PYZus{}img.mat\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{train\PYZus{}images\PYZsq{}}\PY{p}{)}\PY{p}{;}
+            \PY{n}{save}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{MNIST\PYZus{}train\PYZus{}label.mat\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{train\PYZus{}labels\PYZsq{}}\PY{p}{)}\PY{p}{;}
+            \PY{n+nb}{size}\PY{p}{(}\PY{n}{train\PYZus{}images}\PY{p}{)}
+        \PY{k}{end}
+        
+        
+        \PY{k}{if} \PY{o}{\PYZti{}}\PY{n}{exist}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{MNIST\PYZus{}test\PYZus{}img.mat\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{file\PYZsq{}}\PY{p}{)}
+            \PY{n}{images}\PY{p}{=}\PY{n}{loadMNISTImages}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{t10k\PYZhy{}images.idx3\PYZhy{}ubyte\PYZsq{}}\PY{p}{)}\PY{p}{;}
+            \PY{n}{lb}\PY{p}{=}\PY{n}{loadMNISTLabels}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{t10k\PYZhy{}labels.idx1\PYZhy{}ubyte\PYZsq{}}\PY{p}{)}\PY{p}{;}
+            \PY{n}{test\PYZus{}images}\PY{p}{=}\PY{n+nb}{reshape}\PY{p}{(}\PY{n}{images}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{n+nb}{size}\PY{p}{(}\PY{n}{images}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}\PY{n+nb}{size}\PY{p}{(}\PY{n}{images}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{]}\PY{p}{)}\PY{p}{;}
+            \PY{n}{test\PYZus{}labels}\PY{p}{=}\PY{n}{lb}\PY{o}{\PYZsq{}}\PY{p}{;}
+            \PY{n}{save}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{MNIST\PYZus{}test\PYZus{}img.mat\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{test\PYZus{}images\PYZsq{}}\PY{p}{)}\PY{p}{;}
+            \PY{n}{save}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{MNIST\PYZus{}test\PYZus{}label.mat\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{test\PYZus{}labels\PYZsq{}}\PY{p}{)}\PY{p}{;}
+            \PY{n+nb}{size}\PY{p}{(}\PY{n}{test\PYZus{}images}\PY{p}{)}
+        \PY{k}{end}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+ans =
+
+           1           1         784       60000
+
+
+ans =
+
+           1           1         784       10000
+
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{clear}\PY{p}{;}\PY{n}{clc}\PY{p}{;}
+        \PY{n}{load}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{MNIST\PYZus{}train\PYZus{}img.mat\PYZsq{}}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \hypertarget{designing-the-following-network}{%
+\subsection{Designing the following
+network}\label{designing-the-following-network}}
+
+\includegraphics{NET1.png} \includegraphics{NET2.png}
+\includegraphics{NET_f.png}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{h\PYZus{}size}\PY{p}{=}\PY{p}{[}\PY{l+m+mi}{100}\PY{p}{,}\PY{l+m+mi}{200}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+h\_size =
+
+   100   200
+
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{trainX}\PY{p}{=}\PY{n}{train\PYZus{}images}\PY{p}{;}
+        \PY{k}{for} \PY{n+nb}{i}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n+nb}{size}\PY{p}{(}\PY{n}{h\PYZus{}size}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}
+            \PY{n}{s}\PY{p}{=}\PY{l+m+mi}{0}\PY{p}{;}
+            \PY{p}{[}\PY{n}{m}\PY{p}{,}\PY{n}{n}\PY{p}{,}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{]}\PY{p}{=}\PY{n+nb}{size}\PY{p}{(}\PY{n}{trainX}\PY{p}{)}\PY{p}{;}
+            \PY{k}{if} \PY{o}{\PYZti{}}\PY{n}{exist}\PY{p}{(}\PY{n}{strcat}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{network\PYZsq{}}\PY{p}{,}\PY{n}{num2str}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{.mat\PYZsq{}}\PY{p}{)}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{file\PYZsq{}}\PY{p}{)}
+                \PY{n}{layers}\PY{p}{=}\PY{p}{[}\PY{n}{imageInputLayer}\PY{p}{(}\PY{p}{[}\PY{n}{m}\PY{p}{,}\PY{n}{n}\PY{p}{,}\PY{n}{p}\PY{p}{]}\PY{p}{)}\PY{c}{...}
+                \PY{n}{fullyConnectedLayer}\PY{p}{(}\PY{n}{h\PYZus{}size}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{Name\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{fc1\PYZsq{}}\PY{p}{)}\PY{c}{...}
+                \PY{n}{fullyConnectedLayer}\PY{p}{(}\PY{n}{p}\PY{p}{)}\PY{c}{...}
+                \PY{n}{regressionLayer}\PY{p}{]}\PY{o}{\PYZsq{}}\PY{p}{;}
+              \PY{n}{s}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{;}  
+            \PY{k}{else}
+                \PY{n}{load}\PY{p}{(}\PY{n}{strcat}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{network\PYZsq{}}\PY{p}{,}\PY{n}{num2str}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{.mat\PYZsq{}}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+                \PY{n}{layers}\PY{p}{=}\PY{n}{net\PYZus{}pop}\PY{p}{.}\PY{n}{Layers}\PY{p}{;}
+            \PY{k}{end}
+            \PY{k}{if} \PY{n}{s}\PY{o}{==}\PY{l+m+mi}{1}
+                \PY{n}{ep}\PY{p}{=}\PY{l+m+mi}{2}\PY{p}{;}\PY{c}{\PYZpc{}input(\PYZsq{}enter number of epoch :\PYZsq{});}
+                        \PY{n}{options}\PY{p}{=}\PY{n}{trainingOptions}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{sgdm\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{MiniBatchSize\PYZsq{}}\PY{p}{,}\PY{l+m+mi}{200}\PY{p}{,}\PY{c}{...}
+                        \PY{l+s}{\PYZsq{}}\PY{l+s}{InitialLearnRate\PYZsq{}}\PY{p}{,}\PY{l+m+mf}{0.01}\PY{p}{,}\PY{c}{...}
+                            \PY{l+s}{\PYZsq{}}\PY{l+s}{MaxEpochs\PYZsq{}}\PY{p}{,}\PY{n}{ep}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{ExecutionEnvironment\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{gpu\PYZsq{}}\PY{p}{,}\PY{c}{...}
+                            \PY{l+s}{\PYZsq{}}\PY{l+s}{Shuffle\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{once\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{VerboseFrequency\PYZsq{}}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{Verbose\PYZsq{}}\PY{p}{,}\PY{n}{true}\PY{p}{,}\PY{c}{...}
+                            \PY{l+s}{\PYZsq{}}\PY{l+s}{L2Regularization\PYZsq{}}\PY{p}{,}\PY{c}{...}
+                            \PY{l+m+mf}{0.001}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{Plots\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{training\PYZhy{}progress\PYZsq{}}\PY{p}{)}\PY{p}{;}
+                        \PY{p}{[}\PY{n}{net\PYZus{}pop}\PY{p}{,}\PY{n}{v}\PY{p}{]}\PY{p}{=}\PY{n}{trainNetwork}\PY{p}{(}\PY{n}{trainX}\PY{p}{,}\PY{n}{trainX}\PY{p}{,}\PY{n}{layers}\PY{p}{,}\PY{n}{options}\PY{p}{)}\PY{p}{;}
+                        \PY{n}{save}\PY{p}{(}\PY{n}{strcat}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{network\PYZsq{}}\PY{p}{,}\PY{n}{num2str}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{.mat\PYZsq{}}\PY{p}{)}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{net\PYZus{}pop\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{v\PYZsq{}}\PY{p}{)}\PY{p}{;}
+            \PY{k}{else}
+                \PY{n}{a}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{;}\PY{c}{\PYZpc{}input(\PYZsq{}Do you want to train press 1 to yes:\PYZsq{});}
+                    \PY{k}{if} \PY{n}{a}\PY{o}{==}\PY{l+m+mi}{1}
+                        \PY{n}{ep}\PY{p}{=}\PY{l+m+mi}{2}\PY{p}{;}\PY{c}{\PYZpc{}input(\PYZsq{}enter number of epoch :\PYZsq{})}
+                        \PY{n}{options}\PY{p}{=}\PY{n}{trainingOptions}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{sgdm\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{MiniBatchSize\PYZsq{}}\PY{p}{,}\PY{l+m+mi}{200}\PY{p}{,}\PY{c}{...}
+                        \PY{l+s}{\PYZsq{}}\PY{l+s}{InitialLearnRate\PYZsq{}}\PY{p}{,}\PY{c}{...}
+                        \PY{l+m+mf}{0.0001}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{MaxEpochs\PYZsq{}}\PY{p}{,}\PY{n}{ep}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{ExecutionEnvironment\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{gpu\PYZsq{}}\PY{p}{,}\PY{c}{...}
+                            \PY{l+s}{\PYZsq{}}\PY{l+s}{VerboseFrequency\PYZsq{}}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{Verbose\PYZsq{}}\PY{p}{,}\PY{n}{true}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{L2Regularization\PYZsq{}}\PY{p}{,}\PY{c}{...}
+                            \PY{l+m+mf}{0.001}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{Plots\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{training\PYZhy{}progress\PYZsq{}}\PY{p}{)}\PY{p}{;}
+                        \PY{p}{[}\PY{n}{net\PYZus{}pop}\PY{p}{,}\PY{n}{v}\PY{p}{]}\PY{p}{=}\PY{n}{trainNetwork}\PY{p}{(}\PY{n}{trainX}\PY{p}{,}\PY{n}{trainX}\PY{p}{,}\PY{n}{layers}\PY{p}{,}\PY{n}{options}\PY{p}{)}\PY{p}{;}
+                        \PY{n}{delete}\PY{p}{(}\PY{n}{strcat}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{network\PYZsq{}}\PY{p}{,}\PY{n}{num2str}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{.mat\PYZsq{}}\PY{p}{)}\PY{p}{)}
+                        \PY{n}{pause}\PY{p}{(}\PY{l+m+mf}{0.001}\PY{p}{)}
+                        \PY{n}{save}\PY{p}{(}\PY{n}{strcat}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{network\PYZsq{}}\PY{p}{,}\PY{n}{num2str}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{.mat\PYZsq{}}\PY{p}{)}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{net\PYZus{}pop\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{v\PYZsq{}}\PY{p}{)}\PY{p}{;}
+                        \PY{n}{pause}\PY{p}{(}\PY{l+m+mf}{0.1}\PY{p}{)}
+                    \PY{k}{end}
+            \PY{k}{end}
+            \PY{n}{feat}\PY{p}{=}\PY{n}{activations}\PY{p}{(}\PY{n}{net\PYZus{}pop}\PY{p}{,}\PY{n}{trainX}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{fc1\PYZsq{}}\PY{p}{)}\PY{p}{;}
+            \PY{n+nb}{size}\PY{p}{(}\PY{n}{feat}\PY{p}{)}
+            \PY{n}{trainX}\PY{p}{=}\PY{n}{feat}\PY{p}{;}
+        \PY{k}{end}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Initializing image normalization.
+|========================================================================================|
+|  Epoch  |  Iteration  |  Time Elapsed  |  Mini-batch  |  Mini-batch  |  Base Learning  |
+|         |             |   (hh:mm:ss)   |     RMSE     |     Loss     |      Rate       |
+|========================================================================================|
+|       1 |           1 |       00:00:03 |         9.42 |         44.4 |          0.0100 |
+|       1 |          10 |       00:00:04 |         7.98 |         31.8 |          0.0100 |
+|       1 |          20 |       00:00:04 |         6.34 |         20.1 |          0.0100 |
+|       1 |          30 |       00:00:04 |         5.66 |         16.0 |          0.0100 |
+|       1 |          40 |       00:00:04 |         5.05 |         12.7 |          0.0100 |
+|       1 |          50 |       00:00:04 |         4.82 |         11.6 |          0.0100 |
+|       1 |          60 |       00:00:05 |         4.45 |          9.9 |          0.0100 |
+|       1 |          70 |       00:00:05 |         4.15 |          8.6 |          0.0100 |
+|       1 |          80 |       00:00:05 |         3.90 |          7.6 |          0.0100 |
+|       1 |          90 |       00:00:05 |         3.80 |          7.2 |          0.0100 |
+|       1 |         100 |       00:00:05 |         3.67 |          6.7 |          0.0100 |
+|       1 |         110 |       00:00:05 |         3.43 |          5.9 |          0.0100 |
+|       1 |         120 |       00:00:05 |         3.51 |          6.2 |          0.0100 |
+|       1 |         130 |       00:00:06 |         3.39 |          5.7 |          0.0100 |
+|       1 |         140 |       00:00:06 |         3.33 |          5.6 |          0.0100 |
+|       1 |         150 |       00:00:06 |         3.23 |          5.2 |          0.0100 |
+|       1 |         160 |       00:00:06 |         3.10 |          4.8 |          0.0100 |
+|       1 |         170 |       00:00:06 |         3.12 |          4.9 |          0.0100 |
+|       1 |         180 |       00:00:06 |         3.06 |          4.7 |          0.0100 |
+|       1 |         190 |       00:00:07 |         3.04 |          4.6 |          0.0100 |
+|       1 |         200 |       00:00:07 |         2.94 |          4.3 |          0.0100 |
+|       1 |         210 |       00:00:07 |         2.94 |          4.3 |          0.0100 |
+|       1 |         220 |       00:00:07 |         2.90 |          4.2 |          0.0100 |
+|       1 |         230 |       00:00:07 |         2.77 |          3.8 |          0.0100 |
+|       1 |         240 |       00:00:07 |         2.81 |          3.9 |          0.0100 |
+|       1 |         250 |       00:00:07 |         2.89 |          4.2 |          0.0100 |
+|       1 |         260 |       00:00:08 |         2.78 |          3.9 |          0.0100 |
+|       1 |         270 |       00:00:08 |         2.74 |          3.7 |          0.0100 |
+|       1 |         280 |       00:00:08 |         2.63 |          3.5 |          0.0100 |
+|       1 |         290 |       00:00:08 |         2.64 |          3.5 |          0.0100 |
+|       1 |         300 |       00:00:08 |         2.62 |          3.4 |          0.0100 |
+|       2 |         310 |       00:00:08 |         2.65 |          3.5 |          0.0100 |
+|       2 |         320 |       00:00:09 |         2.64 |          3.5 |          0.0100 |
+|       2 |         330 |       00:00:09 |         2.55 |          3.2 |          0.0100 |
+|       2 |         340 |       00:00:09 |         2.57 |          3.3 |          0.0100 |
+|       2 |         350 |       00:00:09 |         2.60 |          3.4 |          0.0100 |
+|       2 |         360 |       00:00:09 |         2.60 |          3.4 |          0.0100 |
+|       2 |         370 |       00:00:09 |         2.52 |          3.2 |          0.0100 |
+|       2 |         380 |       00:00:10 |         2.48 |          3.1 |          0.0100 |
+|       2 |         390 |       00:00:10 |         2.50 |          3.1 |          0.0100 |
+|       2 |         400 |       00:00:10 |         2.47 |          3.1 |          0.0100 |
+|       2 |         410 |       00:00:10 |         2.38 |          2.8 |          0.0100 |
+|       2 |         420 |       00:00:10 |         2.52 |          3.2 |          0.0100 |
+|       2 |         430 |       00:00:10 |         2.45 |          3.0 |          0.0100 |
+|       2 |         440 |       00:00:10 |         2.45 |          3.0 |          0.0100 |
+|       2 |         450 |       00:00:11 |         2.43 |          3.0 |          0.0100 |
+|       2 |         460 |       00:00:11 |         2.35 |          2.8 |          0.0100 |
+|       2 |         470 |       00:00:11 |         2.37 |          2.8 |          0.0100 |
+|       2 |         480 |       00:00:11 |         2.39 |          2.8 |          0.0100 |
+|       2 |         490 |       00:00:11 |         2.38 |          2.8 |          0.0100 |
+|       2 |         500 |       00:00:11 |         2.35 |          2.8 |          0.0100 |
+|       2 |         510 |       00:00:12 |         2.37 |          2.8 |          0.0100 |
+|       2 |         520 |       00:00:12 |         2.34 |          2.7 |          0.0100 |
+|       2 |         530 |       00:00:12 |         2.27 |          2.6 |          0.0100 |
+|       2 |         540 |       00:00:12 |         2.31 |          2.7 |          0.0100 |
+|       2 |         550 |       00:00:12 |         2.39 |          2.9 |          0.0100 |
+|       2 |         560 |       00:00:12 |         2.32 |          2.7 |          0.0100 |
+|       2 |         570 |       00:00:13 |         2.31 |          2.7 |          0.0100 |
+|       2 |         580 |       00:00:13 |         2.24 |          2.5 |          0.0100 |
+|       2 |         590 |       00:00:13 |         2.24 |          2.5 |          0.0100 |
+|       2 |         600 |       00:00:13 |         2.24 |          2.5 |          0.0100 |
+|========================================================================================|
+
+ans =
+
+           1           1         100       60000
+
+Initializing image normalization.
+|========================================================================================|
+|  Epoch  |  Iteration  |  Time Elapsed  |  Mini-batch  |  Mini-batch  |  Base Learning  |
+|         |             |   (hh:mm:ss)   |     RMSE     |     Loss     |      Rate       |
+|========================================================================================|
+|       1 |           1 |       00:00:00 |         6.20 |         19.2 |          0.0100 |
+|       1 |          10 |       00:00:00 |         6.18 |         19.1 |          0.0100 |
+|       1 |          20 |       00:00:00 |         5.35 |         14.3 |          0.0100 |
+|       1 |          30 |       00:00:01 |         4.61 |         10.6 |          0.0100 |
+|       1 |          40 |       00:00:01 |         4.14 |          8.6 |          0.0100 |
+|       1 |          50 |       00:00:01 |         3.67 |          6.7 |          0.0100 |
+|       1 |          60 |       00:00:01 |         3.35 |          5.6 |          0.0100 |
+|       1 |          70 |       00:00:01 |         3.02 |          4.5 |          0.0100 |
+|       1 |          80 |       00:00:01 |         2.81 |          3.9 |          0.0100 |
+|       1 |          90 |       00:00:01 |         2.62 |          3.4 |          0.0100 |
+|       1 |         100 |       00:00:01 |         2.49 |          3.1 |          0.0100 |
+|       1 |         110 |       00:00:02 |         2.32 |          2.7 |          0.0100 |
+|       1 |         120 |       00:00:02 |         2.16 |          2.3 |          0.0100 |
+|       1 |         130 |       00:00:02 |         2.04 |          2.1 |          0.0100 |
+|       1 |         140 |       00:00:02 |         1.96 |          1.9 |          0.0100 |
+|       1 |         150 |       00:00:02 |         1.88 |          1.8 |          0.0100 |
+|       1 |         160 |       00:00:02 |         1.77 |          1.6 |          0.0100 |
+|       1 |         170 |       00:00:02 |         1.71 |          1.5 |          0.0100 |
+|       1 |         180 |       00:00:02 |         1.66 |          1.4 |          0.0100 |
+|       1 |         190 |       00:00:02 |         1.55 |          1.2 |          0.0100 |
+|       1 |         200 |       00:00:03 |         1.47 |          1.1 |          0.0100 |
+|       1 |         210 |       00:00:03 |         1.43 |          1.0 |          0.0100 |
+|       1 |         220 |       00:00:03 |         1.36 |          0.9 |          0.0100 |
+|       1 |         230 |       00:00:03 |         1.27 |          0.8 |          0.0100 |
+|       1 |         240 |       00:00:03 |         1.24 |          0.8 |          0.0100 |
+|       1 |         250 |       00:00:03 |         1.22 |          0.7 |          0.0100 |
+|       1 |         260 |       00:00:03 |         1.15 |          0.7 |          0.0100 |
+|       1 |         270 |       00:00:03 |         1.08 |          0.6 |          0.0100 |
+|       1 |         280 |       00:00:04 |         1.04 |          0.5 |          0.0100 |
+|       1 |         290 |       00:00:04 |         1.02 |          0.5 |          0.0100 |
+|       1 |         300 |       00:00:04 |         0.99 |          0.5 |          0.0100 |
+|       2 |         310 |       00:00:04 |         0.96 |          0.5 |          0.0100 |
+|       2 |         320 |       00:00:04 |         0.91 |          0.4 |          0.0100 |
+|       2 |         330 |       00:00:04 |         0.89 |          0.4 |          0.0100 |
+|       2 |         340 |       00:00:04 |         0.88 |          0.4 |          0.0100 |
+|       2 |         350 |       00:00:04 |         0.85 |          0.4 |          0.0100 |
+|       2 |         360 |       00:00:04 |         0.83 |          0.3 |          0.0100 |
+|       2 |         370 |       00:00:05 |         0.78 |          0.3 |          0.0100 |
+|       2 |         380 |       00:00:05 |         0.78 |          0.3 |          0.0100 |
+|       2 |         390 |       00:00:05 |         0.75 |          0.3 |          0.0100 |
+|       2 |         400 |       00:00:05 |         0.75 |          0.3 |          0.0100 |
+|       2 |         410 |       00:00:05 |         0.72 |          0.3 |          0.0100 |
+|       2 |         420 |       00:00:05 |         0.71 |          0.3 |          0.0100 |
+|       2 |         430 |       00:00:05 |         0.68 |          0.2 |          0.0100 |
+|       2 |         440 |       00:00:05 |         0.68 |          0.2 |          0.0100 |
+|       2 |         450 |       00:00:06 |         0.67 |          0.2 |          0.0100 |
+|       2 |         460 |       00:00:06 |         0.66 |          0.2 |          0.0100 |
+|       2 |         470 |       00:00:06 |         0.65 |          0.2 |          0.0100 |
+|       2 |         480 |       00:00:06 |         0.67 |          0.2 |          0.0100 |
+|       2 |         490 |       00:00:06 |         0.62 |          0.2 |          0.0100 |
+|       2 |         500 |       00:00:06 |         0.63 |          0.2 |          0.0100 |
+|       2 |         510 |       00:00:06 |         0.60 |          0.2 |          0.0100 |
+|       2 |         520 |       00:00:06 |         0.59 |          0.2 |          0.0100 |
+|       2 |         530 |       00:00:07 |         0.56 |          0.2 |          0.0100 |
+|       2 |         540 |       00:00:07 |         0.57 |          0.2 |          0.0100 |
+|       2 |         550 |       00:00:07 |         0.59 |          0.2 |          0.0100 |
+|       2 |         560 |       00:00:07 |         0.56 |          0.2 |          0.0100 |
+|       2 |         570 |       00:00:07 |         0.55 |          0.2 |          0.0100 |
+|       2 |         580 |       00:00:07 |         0.53 |          0.1 |          0.0100 |
+|       2 |         590 |       00:00:07 |         0.54 |          0.1 |          0.0100 |
+|       2 |         600 |       00:00:07 |         0.54 |          0.1 |          0.0100 |
+|========================================================================================|
+
+ans =
+
+           1           1         200       60000
+
+
+    \end{Verbatim}
+
+    \includegraphics{AE1.png}
+
+    \includegraphics{AE2.png}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{trainX}\PY{p}{=}\PY{n}{train\PYZus{}images}\PY{p}{;}
+        \PY{n}{s}\PY{p}{=}\PY{l+m+mi}{0}\PY{p}{;}
+        \PY{n}{load}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{MNIST\PYZus{}train\PYZus{}label.mat\PYZsq{}}\PY{p}{)}\PY{p}{;}
+        \PY{n}{u}\PY{p}{=}\PY{n}{unique}\PY{p}{(}\PY{n}{train\PYZus{}labels}\PY{p}{)}\PY{p}{;}
+        \PY{p}{[}\PY{n}{m}\PY{p}{,}\PY{n}{n}\PY{p}{,}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{]}\PY{p}{=}\PY{n+nb}{size}\PY{p}{(}\PY{n}{trainX}\PY{p}{)}\PY{p}{;}
+        \PY{k}{for} \PY{n+nb}{i}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n+nb}{size}\PY{p}{(}\PY{n}{h\PYZus{}size}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}
+            \PY{n}{f}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n+nb}{i}\PY{p}{)}\PY{p}{=}\PY{n}{fullyConnectedLayer}\PY{p}{(}\PY{n}{h\PYZus{}size}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{Name\PYZsq{}}\PY{p}{,}\PY{n}{strcat}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{fc\PYZsq{}}\PY{p}{,}\PY{n}{num2str}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+        \PY{k}{if} \PY{o}{\PYZti{}}\PY{n}{exist}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{f\PYZus{}network.mat\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{file\PYZsq{}}\PY{p}{)}
+            \PY{n}{layers}\PY{p}{=}\PY{p}{[}\PY{n}{imageInputLayer}\PY{p}{(}\PY{p}{[}\PY{n}{m}\PY{p}{,}\PY{n}{n}\PY{p}{,}\PY{n}{p}\PY{p}{]}\PY{p}{)}\PY{c}{...}
+            \PY{n}{f}\PY{c}{...}
+            \PY{n}{fullyConnectedLayer}\PY{p}{(}\PY{n+nb}{size}\PY{p}{(}\PY{n}{u}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}\PY{c}{...}
+            \PY{n}{softmaxLayer}\PY{c}{...}
+            \PY{n}{classificationLayer}\PY{p}{]}\PY{o}{\PYZsq{}}\PY{p}{;}
+          \PY{n}{s}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{;}  
+        \PY{k}{else}
+            \PY{n}{load}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{f\PYZus{}network.mat\PYZsq{}}\PY{p}{)}\PY{p}{;}
+            \PY{n}{layers}\PY{p}{=}\PY{n}{net\PYZus{}pop}\PY{p}{.}\PY{n}{Layers}\PY{p}{;}
+        \PY{k}{end}
+        \PY{k}{for} \PY{n+nb}{i}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n+nb}{size}\PY{p}{(}\PY{n}{h\PYZus{}size}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}
+            \PY{n}{load}\PY{p}{(}\PY{n}{strcat}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{network\PYZsq{}}\PY{p}{,}\PY{n}{num2str}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{.mat\PYZsq{}}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+            \PY{n}{l}\PY{p}{=}\PY{n}{net\PYZus{}pop}\PY{p}{.}\PY{n}{Layers}\PY{p}{;}
+            \PY{n}{layers}\PY{p}{(}\PY{n+nb}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{.}\PY{n}{Weights}\PY{p}{=}\PY{n}{l}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{.}\PY{n}{Weights}\PY{p}{;}
+            \PY{n}{layers}\PY{p}{(}\PY{n+nb}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{.}\PY{n}{Bias}\PY{p}{=}\PY{n}{l}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{.}\PY{n}{Bias}\PY{p}{;}
+        \PY{k}{end}
+        
+        
+        \PY{k}{for} \PY{n+nb}{i}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n+nb}{size}\PY{p}{(}\PY{n}{u}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}
+            \PY{n}{cu}\PY{p}{\PYZob{}}\PY{n+nb}{i}\PY{p}{\PYZcb{}}\PY{p}{=}\PY{n}{strcat}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{c\PYZsq{}}\PY{p}{,}\PY{n}{num2str}\PY{p}{(}\PY{n}{u}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+        \PY{n}{train\PYZus{}target}\PY{p}{=}\PY{n}{categorical}\PY{p}{(}\PY{n}{train\PYZus{}labels}\PY{p}{,}\PY{n}{u}\PY{p}{,}\PY{n}{cu}\PY{p}{)}\PY{p}{;}
+        
+        \PY{k}{if} \PY{n}{s}\PY{o}{==}\PY{l+m+mi}{1}
+            \PY{n}{ep}\PY{p}{=}\PY{l+m+mi}{10}\PY{p}{;}\PY{c}{\PYZpc{}input(\PYZsq{}enter number of epoch :\PYZsq{});}
+                    \PY{n}{options}\PY{p}{=}\PY{n}{trainingOptions}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{sgdm\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{MiniBatchSize\PYZsq{}}\PY{p}{,}\PY{l+m+mi}{200}\PY{p}{,}\PY{c}{...}
+                    \PY{l+s}{\PYZsq{}}\PY{l+s}{InitialLearnRate\PYZsq{}}\PY{p}{,}\PY{l+m+mf}{0.01}\PY{p}{,}\PY{c}{...}
+                        \PY{l+s}{\PYZsq{}}\PY{l+s}{MaxEpochs\PYZsq{}}\PY{p}{,}\PY{n}{ep}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{ExecutionEnvironment\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{gpu\PYZsq{}}\PY{p}{,}\PY{c}{...}
+                        \PY{l+s}{\PYZsq{}}\PY{l+s}{Shuffle\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{once\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{VerboseFrequency\PYZsq{}}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{Verbose\PYZsq{}}\PY{p}{,}\PY{n}{true}\PY{p}{,}\PY{c}{...}
+                        \PY{l+s}{\PYZsq{}}\PY{l+s}{L2Regularization\PYZsq{}}\PY{p}{,}\PY{c}{...}
+                        \PY{l+m+mf}{0.001}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{Plots\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{training\PYZhy{}progress\PYZsq{}}\PY{p}{)}\PY{p}{;}
+                    \PY{p}{[}\PY{n}{net\PYZus{}pop}\PY{p}{,}\PY{n}{v}\PY{p}{]}\PY{p}{=}\PY{n}{trainNetwork}\PY{p}{(}\PY{n}{trainX}\PY{p}{,}\PY{n}{train\PYZus{}target}\PY{p}{,}\PY{n}{layers}\PY{p}{,}\PY{n}{options}\PY{p}{)}\PY{p}{;}
+                    \PY{n}{save}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{f\PYZus{}network.mat\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{net\PYZus{}pop\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{v\PYZsq{}}\PY{p}{)}\PY{p}{;}
+        \PY{k}{else}
+            \PY{n}{a}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{;}\PY{c}{\PYZpc{}input(\PYZsq{}Do you want to train press 1 to yes:\PYZsq{});}
+                \PY{k}{if} \PY{n}{a}\PY{o}{==}\PY{l+m+mi}{1}
+                    \PY{n}{ep}\PY{p}{=}\PY{l+m+mi}{10}\PY{p}{;}\PY{c}{\PYZpc{}input(\PYZsq{}enter number of epoch :\PYZsq{})}
+                    \PY{n}{options}\PY{p}{=}\PY{n}{trainingOptions}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{sgdm\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{MiniBatchSize\PYZsq{}}\PY{p}{,}\PY{l+m+mi}{200}\PY{p}{,}\PY{c}{...}
+                    \PY{l+s}{\PYZsq{}}\PY{l+s}{InitialLearnRate\PYZsq{}}\PY{p}{,}\PY{c}{...}
+                    \PY{l+m+mf}{0.0001}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{MaxEpochs\PYZsq{}}\PY{p}{,}\PY{n}{ep}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{ExecutionEnvironment\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{gpu\PYZsq{}}\PY{p}{,}\PY{c}{...}
+                        \PY{l+s}{\PYZsq{}}\PY{l+s}{VerboseFrequency\PYZsq{}}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{Verbose\PYZsq{}}\PY{p}{,}\PY{n}{true}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{L2Regularization\PYZsq{}}\PY{p}{,}\PY{c}{...}
+                        \PY{l+m+mf}{0.001}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{Plots\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{training\PYZhy{}progress\PYZsq{}}\PY{p}{)}\PY{p}{;}
+                    \PY{p}{[}\PY{n}{net\PYZus{}pop}\PY{p}{,}\PY{n}{v}\PY{p}{]}\PY{p}{=}\PY{n}{trainNetwork}\PY{p}{(}\PY{n}{trainX}\PY{p}{,}\PY{n}{train\PYZus{}target}\PY{p}{,}\PY{n}{layers}\PY{p}{,}\PY{n}{options}\PY{p}{)}\PY{p}{;}
+                    \PY{n}{delete}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{f\PYZus{}network.mat\PYZsq{}}\PY{p}{)}
+                    \PY{n}{pause}\PY{p}{(}\PY{l+m+mf}{0.001}\PY{p}{)}
+                    \PY{n}{save}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{f\PYZus{}network.mat\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{net\PYZus{}pop\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{v\PYZsq{}}\PY{p}{)}\PY{p}{;}
+                    \PY{n}{pause}\PY{p}{(}\PY{l+m+mf}{0.1}\PY{p}{)}
+                \PY{k}{end}
+        \PY{k}{end}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Initializing image normalization.
+|========================================================================================|
+|  Epoch  |  Iteration  |  Time Elapsed  |  Mini-batch  |  Mini-batch  |  Base Learning  |
+|         |             |   (hh:mm:ss)   |   Accuracy   |     Loss     |      Rate       |
+|========================================================================================|
+|       1 |           1 |       00:00:17 |       11.50\% |       2.3062 |          0.0100 |
+|       1 |          10 |       00:00:17 |       65.50\% |       2.0603 |          0.0100 |
+|       1 |          20 |       00:00:17 |       74.50\% |       1.5099 |          0.0100 |
+|       1 |          30 |       00:00:18 |       74.00\% |       1.1181 |          0.0100 |
+|       1 |          40 |       00:00:18 |       74.50\% |       0.8305 |          0.0100 |
+|       1 |          50 |       00:00:18 |       80.00\% |       0.6930 |          0.0100 |
+|       1 |          60 |       00:00:18 |       89.50\% |       0.4894 |          0.0100 |
+|       1 |          70 |       00:00:18 |       86.00\% |       0.5481 |          0.0100 |
+|       1 |          80 |       00:00:18 |       81.50\% |       0.5769 |          0.0100 |
+|       1 |          90 |       00:00:19 |       88.50\% |       0.4448 |          0.0100 |
+|       1 |         100 |       00:00:19 |       89.50\% |       0.4487 |          0.0100 |
+|       1 |         110 |       00:00:19 |       86.50\% |       0.5034 |          0.0100 |
+|       1 |         120 |       00:00:19 |       90.50\% |       0.3948 |          0.0100 |
+|       1 |         130 |       00:00:19 |       87.50\% |       0.3980 |          0.0100 |
+|       1 |         140 |       00:00:19 |       92.50\% |       0.3201 |          0.0100 |
+|       1 |         150 |       00:00:19 |       91.50\% |       0.3372 |          0.0100 |
+|       1 |         160 |       00:00:20 |       91.00\% |       0.3894 |          0.0100 |
+|       1 |         170 |       00:00:20 |       91.50\% |       0.3237 |          0.0100 |
+|       1 |         180 |       00:00:20 |       91.50\% |       0.3455 |          0.0100 |
+|       1 |         190 |       00:00:20 |       87.50\% |       0.4204 |          0.0100 |
+|       1 |         200 |       00:00:20 |       90.50\% |       0.3181 |          0.0100 |
+|       1 |         210 |       00:00:20 |       89.00\% |       0.3188 |          0.0100 |
+|       1 |         220 |       00:00:20 |       91.50\% |       0.2964 |          0.0100 |
+|       1 |         230 |       00:00:21 |       86.00\% |       0.4138 |          0.0100 |
+|       1 |         240 |       00:00:21 |       87.50\% |       0.3560 |          0.0100 |
+|       1 |         250 |       00:00:21 |       89.00\% |       0.3439 |          0.0100 |
+|       1 |         260 |       00:00:21 |       92.00\% |       0.3070 |          0.0100 |
+|       1 |         270 |       00:00:21 |       88.50\% |       0.3497 |          0.0100 |
+|       1 |         280 |       00:00:21 |       91.00\% |       0.3277 |          0.0100 |
+|       1 |         290 |       00:00:21 |       88.00\% |       0.3374 |          0.0100 |
+|       1 |         300 |       00:00:22 |       89.50\% |       0.3370 |          0.0100 |
+|       2 |         310 |       00:00:22 |       90.50\% |       0.3490 |          0.0100 |
+|       2 |         320 |       00:00:22 |       90.50\% |       0.2981 |          0.0100 |
+|       2 |         330 |       00:00:22 |       91.00\% |       0.2888 |          0.0100 |
+|       2 |         340 |       00:00:22 |       91.00\% |       0.2967 |          0.0100 |
+|       2 |         350 |       00:00:22 |       88.50\% |       0.4004 |          0.0100 |
+|       2 |         360 |       00:00:22 |       93.00\% |       0.2916 |          0.0100 |
+|       2 |         370 |       00:00:23 |       90.50\% |       0.3411 |          0.0100 |
+|       2 |         380 |       00:00:23 |       87.50\% |       0.4168 |          0.0100 |
+|       2 |         390 |       00:00:23 |       91.00\% |       0.3448 |          0.0100 |
+|       2 |         400 |       00:00:23 |       92.50\% |       0.3374 |          0.0100 |
+|       2 |         410 |       00:00:23 |       90.50\% |       0.4083 |          0.0100 |
+|       2 |         420 |       00:00:23 |       92.50\% |       0.3375 |          0.0100 |
+|       2 |         430 |       00:00:23 |       91.50\% |       0.3237 |          0.0100 |
+|       2 |         440 |       00:00:24 |       95.00\% |       0.2347 |          0.0100 |
+|       2 |         450 |       00:00:24 |       94.00\% |       0.2629 |          0.0100 |
+|       2 |         460 |       00:00:24 |       93.00\% |       0.3504 |          0.0100 |
+|       2 |         470 |       00:00:24 |       94.00\% |       0.2418 |          0.0100 |
+|       2 |         480 |       00:00:24 |       94.00\% |       0.2767 |          0.0100 |
+|       2 |         490 |       00:00:24 |       90.00\% |       0.3677 |          0.0100 |
+|       2 |         500 |       00:00:24 |       91.00\% |       0.2787 |          0.0100 |
+|       2 |         510 |       00:00:25 |       93.00\% |       0.2572 |          0.0100 |
+|       2 |         520 |       00:00:25 |       93.00\% |       0.2703 |          0.0100 |
+|       2 |         530 |       00:00:25 |       88.00\% |       0.3590 |          0.0100 |
+|       2 |         540 |       00:00:25 |       89.00\% |       0.3063 |          0.0100 |
+|       2 |         550 |       00:00:25 |       90.00\% |       0.2963 |          0.0100 |
+|       2 |         560 |       00:00:25 |       92.50\% |       0.2904 |          0.0100 |
+|       2 |         570 |       00:00:26 |       90.00\% |       0.3037 |          0.0100 |
+|       2 |         580 |       00:00:26 |       91.50\% |       0.3098 |          0.0100 |
+|       2 |         590 |       00:00:26 |       89.00\% |       0.2997 |          0.0100 |
+|       2 |         600 |       00:00:26 |       90.50\% |       0.3030 |          0.0100 |
+|       3 |         610 |       00:00:26 |       91.50\% |       0.3057 |          0.0100 |
+|       3 |         620 |       00:00:26 |       91.50\% |       0.2860 |          0.0100 |
+|       3 |         630 |       00:00:26 |       93.00\% |       0.2459 |          0.0100 |
+|       3 |         640 |       00:00:27 |       92.00\% |       0.2664 |          0.0100 |
+|       3 |         650 |       00:00:27 |       89.50\% |       0.3626 |          0.0100 |
+|       3 |         660 |       00:00:27 |       94.00\% |       0.2715 |          0.0100 |
+|       3 |         670 |       00:00:27 |       90.50\% |       0.3172 |          0.0100 |
+|       3 |         680 |       00:00:27 |       88.50\% |       0.3895 |          0.0100 |
+|       3 |         690 |       00:00:27 |       91.50\% |       0.3327 |          0.0100 |
+|       3 |         700 |       00:00:27 |       92.50\% |       0.3227 |          0.0100 |
+|       3 |         710 |       00:00:28 |       91.00\% |       0.3861 |          0.0100 |
+|       3 |         720 |       00:00:28 |       93.00\% |       0.3223 |          0.0100 |
+|       3 |         730 |       00:00:28 |       91.50\% |       0.3067 |          0.0100 |
+|       3 |         740 |       00:00:28 |       95.00\% |       0.2144 |          0.0100 |
+|       3 |         750 |       00:00:28 |       94.00\% |       0.2504 |          0.0100 |
+|       3 |         760 |       00:00:28 |       94.00\% |       0.3376 |          0.0100 |
+|       3 |         770 |       00:00:28 |       94.00\% |       0.2198 |          0.0100 |
+|       3 |         780 |       00:00:29 |       94.00\% |       0.2561 |          0.0100 |
+|       3 |         790 |       00:00:29 |       91.50\% |       0.3524 |          0.0100 |
+|       3 |         800 |       00:00:29 |       91.00\% |       0.2702 |          0.0100 |
+|       3 |         810 |       00:00:29 |       93.50\% |       0.2436 |          0.0100 |
+|       3 |         820 |       00:00:29 |       93.50\% |       0.2625 |          0.0100 |
+|       3 |         830 |       00:00:29 |       89.50\% |       0.3428 |          0.0100 |
+|       3 |         840 |       00:00:29 |       90.00\% |       0.2879 |          0.0100 |
+|       3 |         850 |       00:00:30 |       90.00\% |       0.2828 |          0.0100 |
+|       3 |         860 |       00:00:30 |       93.50\% |       0.2851 |          0.0100 |
+|       3 |         870 |       00:00:30 |       91.00\% |       0.2829 |          0.0100 |
+|       3 |         880 |       00:00:30 |       91.00\% |       0.3042 |          0.0100 |
+|       3 |         890 |       00:00:30 |       90.00\% |       0.2859 |          0.0100 |
+|       3 |         900 |       00:00:30 |       90.50\% |       0.2863 |          0.0100 |
+|       4 |         910 |       00:00:30 |       92.00\% |       0.2871 |          0.0100 |
+|       4 |         920 |       00:00:31 |       91.00\% |       0.2844 |          0.0100 |
+|       4 |         930 |       00:00:31 |       94.00\% |       0.2256 |          0.0100 |
+|       4 |         940 |       00:00:31 |       92.50\% |       0.2549 |          0.0100 |
+|       4 |         950 |       00:00:31 |       89.00\% |       0.3432 |          0.0100 |
+|       4 |         960 |       00:00:31 |       94.50\% |       0.2610 |          0.0100 |
+|       4 |         970 |       00:00:31 |       91.00\% |       0.3029 |          0.0100 |
+|       4 |         980 |       00:00:31 |       89.00\% |       0.3722 |          0.0100 |
+|       4 |         990 |       00:00:32 |       91.50\% |       0.3257 |          0.0100 |
+|       4 |        1000 |       00:00:32 |       92.00\% |       0.3141 |          0.0100 |
+|       4 |        1010 |       00:00:32 |       91.50\% |       0.3735 |          0.0100 |
+|       4 |        1020 |       00:00:32 |       93.00\% |       0.3128 |          0.0100 |
+|       4 |        1030 |       00:00:32 |       91.50\% |       0.2980 |          0.0100 |
+|       4 |        1040 |       00:00:32 |       95.50\% |       0.2045 |          0.0100 |
+|       4 |        1050 |       00:00:32 |       94.00\% |       0.2454 |          0.0100 |
+|       4 |        1060 |       00:00:33 |       94.00\% |       0.3304 |          0.0100 |
+|       4 |        1070 |       00:00:33 |       95.00\% |       0.2099 |          0.0100 |
+|       4 |        1080 |       00:00:33 |       94.50\% |       0.2466 |          0.0100 |
+|       4 |        1090 |       00:00:33 |       92.50\% |       0.3415 |          0.0100 |
+|       4 |        1100 |       00:00:33 |       91.50\% |       0.2641 |          0.0100 |
+|       4 |        1110 |       00:00:33 |       94.00\% |       0.2371 |          0.0100 |
+|       4 |        1120 |       00:00:34 |       93.50\% |       0.2582 |          0.0100 |
+|       4 |        1130 |       00:00:34 |       89.50\% |       0.3337 |          0.0100 |
+|       4 |        1140 |       00:00:34 |       90.50\% |       0.2767 |          0.0100 |
+|       4 |        1150 |       00:00:34 |       90.50\% |       0.2774 |          0.0100 |
+|       4 |        1160 |       00:00:34 |       93.00\% |       0.2812 |          0.0100 |
+|       4 |        1170 |       00:00:34 |       91.50\% |       0.2716 |          0.0100 |
+|       4 |        1180 |       00:00:34 |       91.50\% |       0.3003 |          0.0100 |
+|       4 |        1190 |       00:00:35 |       90.50\% |       0.2773 |          0.0100 |
+|       4 |        1200 |       00:00:35 |       90.50\% |       0.2759 |          0.0100 |
+|       5 |        1210 |       00:00:35 |       93.00\% |       0.2764 |          0.0100 |
+|       5 |        1220 |       00:00:35 |       91.50\% |       0.2847 |          0.0100 |
+|       5 |        1230 |       00:00:35 |       94.50\% |       0.2136 |          0.0100 |
+|       5 |        1240 |       00:00:35 |       92.00\% |       0.2494 |          0.0100 |
+|       5 |        1250 |       00:00:35 |       89.50\% |       0.3303 |          0.0100 |
+|       5 |        1260 |       00:00:36 |       94.00\% |       0.2546 |          0.0100 |
+|       5 |        1270 |       00:00:36 |       90.50\% |       0.2923 |          0.0100 |
+|       5 |        1280 |       00:00:36 |       89.50\% |       0.3600 |          0.0100 |
+|       5 |        1290 |       00:00:36 |       92.00\% |       0.3209 |          0.0100 |
+|       5 |        1300 |       00:00:36 |       92.00\% |       0.3080 |          0.0100 |
+|       5 |        1310 |       00:00:36 |       92.00\% |       0.3644 |          0.0100 |
+|       5 |        1320 |       00:00:36 |       93.00\% |       0.3056 |          0.0100 |
+|       5 |        1330 |       00:00:37 |       91.50\% |       0.2928 |          0.0100 |
+|       5 |        1340 |       00:00:37 |       95.50\% |       0.1982 |          0.0100 |
+|       5 |        1350 |       00:00:37 |       94.00\% |       0.2422 |          0.0100 |
+|       5 |        1360 |       00:00:37 |       94.00\% |       0.3255 |          0.0100 |
+|       5 |        1370 |       00:00:37 |       95.00\% |       0.2043 |          0.0100 |
+|       5 |        1380 |       00:00:37 |       94.00\% |       0.2412 |          0.0100 |
+|       5 |        1390 |       00:00:37 |       92.00\% |       0.3341 |          0.0100 |
+|       5 |        1400 |       00:00:37 |       92.00\% |       0.2588 |          0.0100 |
+|       5 |        1410 |       00:00:38 |       94.00\% |       0.2325 |          0.0100 |
+|       5 |        1420 |       00:00:38 |       94.00\% |       0.2552 |          0.0100 |
+|       5 |        1430 |       00:00:38 |       89.50\% |       0.3271 |          0.0100 |
+|       5 |        1440 |       00:00:38 |       90.50\% |       0.2687 |          0.0100 |
+|       5 |        1450 |       00:00:38 |       90.00\% |       0.2752 |          0.0100 |
+|       5 |        1460 |       00:00:38 |       93.00\% |       0.2777 |          0.0100 |
+|       5 |        1470 |       00:00:38 |       91.50\% |       0.2648 |          0.0100 |
+|       5 |        1480 |       00:00:39 |       91.50\% |       0.2969 |          0.0100 |
+|       5 |        1490 |       00:00:39 |       90.50\% |       0.2706 |          0.0100 |
+|       5 |        1500 |       00:00:39 |       90.50\% |       0.2687 |          0.0100 |
+|       6 |        1510 |       00:00:39 |       93.00\% |       0.2690 |          0.0100 |
+|       6 |        1520 |       00:00:39 |       91.50\% |       0.2855 |          0.0100 |
+|       6 |        1530 |       00:00:39 |       95.00\% |       0.2057 |          0.0100 |
+|       6 |        1540 |       00:00:39 |       92.50\% |       0.2462 |          0.0100 |
+|       6 |        1550 |       00:00:40 |       90.50\% |       0.3208 |          0.0100 |
+|       6 |        1560 |       00:00:40 |       94.00\% |       0.2502 |          0.0100 |
+|       6 |        1570 |       00:00:40 |       90.50\% |       0.2839 |          0.0100 |
+|       6 |        1580 |       00:00:40 |       89.50\% |       0.3512 |          0.0100 |
+|       6 |        1590 |       00:00:40 |       92.00\% |       0.3172 |          0.0100 |
+|       6 |        1600 |       00:00:40 |       93.00\% |       0.3035 |          0.0100 |
+|       6 |        1610 |       00:00:40 |       92.00\% |       0.3570 |          0.0100 |
+|       6 |        1620 |       00:00:41 |       93.00\% |       0.2998 |          0.0100 |
+|       6 |        1630 |       00:00:41 |       91.50\% |       0.2894 |          0.0100 |
+|       6 |        1640 |       00:00:41 |       95.50\% |       0.1936 |          0.0100 |
+|       6 |        1650 |       00:00:41 |       94.00\% |       0.2397 |          0.0100 |
+|       6 |        1660 |       00:00:41 |       94.00\% |       0.3217 |          0.0100 |
+|       6 |        1670 |       00:00:41 |       95.00\% |       0.2008 |          0.0100 |
+|       6 |        1680 |       00:00:41 |       94.00\% |       0.2377 |          0.0100 |
+|       6 |        1690 |       00:00:42 |       92.00\% |       0.3286 |          0.0100 |
+|       6 |        1700 |       00:00:42 |       92.00\% |       0.2544 |          0.0100 |
+|       6 |        1710 |       00:00:42 |       93.50\% |       0.2289 |          0.0100 |
+|       6 |        1720 |       00:00:42 |       94.00\% |       0.2528 |          0.0100 |
+|       6 |        1730 |       00:00:42 |       89.50\% |       0.3220 |          0.0100 |
+|       6 |        1740 |       00:00:42 |       91.00\% |       0.2626 |          0.0100 |
+|       6 |        1750 |       00:00:42 |       90.50\% |       0.2745 |          0.0100 |
+|       6 |        1760 |       00:00:43 |       93.50\% |       0.2743 |          0.0100 |
+|       6 |        1770 |       00:00:43 |       91.50\% |       0.2602 |          0.0100 |
+|       6 |        1780 |       00:00:43 |       91.00\% |       0.2937 |          0.0100 |
+|       6 |        1790 |       00:00:43 |       91.50\% |       0.2651 |          0.0100 |
+|       6 |        1800 |       00:00:43 |       90.00\% |       0.2633 |          0.0100 |
+|       7 |        1810 |       00:00:43 |       92.50\% |       0.2633 |          0.0100 |
+|       7 |        1820 |       00:00:43 |       91.00\% |       0.2863 |          0.0100 |
+|       7 |        1830 |       00:00:44 |       95.50\% |       0.2003 |          0.0100 |
+|       7 |        1840 |       00:00:44 |       93.00\% |       0.2441 |          0.0100 |
+|       7 |        1850 |       00:00:44 |       91.00\% |       0.3133 |          0.0100 |
+|       7 |        1860 |       00:00:44 |       94.00\% |       0.2466 |          0.0100 |
+|       7 |        1870 |       00:00:44 |       90.00\% |       0.2773 |          0.0100 |
+|       7 |        1880 |       00:00:44 |       90.00\% |       0.3445 |          0.0100 |
+|       7 |        1890 |       00:00:44 |       92.00\% |       0.3141 |          0.0100 |
+|       7 |        1900 |       00:00:44 |       93.00\% |       0.2999 |          0.0100 |
+|       7 |        1910 |       00:00:45 |       92.00\% |       0.3506 |          0.0100 |
+|       7 |        1920 |       00:00:45 |       93.00\% |       0.2949 |          0.0100 |
+|       7 |        1930 |       00:00:45 |       91.00\% |       0.2870 |          0.0100 |
+|       7 |        1940 |       00:00:45 |       95.50\% |       0.1902 |          0.0100 |
+|       7 |        1950 |       00:00:45 |       94.00\% |       0.2376 |          0.0100 |
+|       7 |        1960 |       00:00:45 |       94.00\% |       0.3186 |          0.0100 |
+|       7 |        1970 |       00:00:45 |       94.50\% |       0.1983 |          0.0100 |
+|       7 |        1980 |       00:00:46 |       94.00\% |       0.2352 |          0.0100 |
+|       7 |        1990 |       00:00:46 |       92.00\% |       0.3244 |          0.0100 |
+|       7 |        2000 |       00:00:46 |       92.00\% |       0.2506 |          0.0100 |
+|       7 |        2010 |       00:00:46 |       93.50\% |       0.2259 |          0.0100 |
+|       7 |        2020 |       00:00:46 |       94.00\% |       0.2507 |          0.0100 |
+|       7 |        2030 |       00:00:46 |       89.50\% |       0.3178 |          0.0100 |
+|       7 |        2040 |       00:00:46 |       91.00\% |       0.2578 |          0.0100 |
+|       7 |        2050 |       00:00:47 |       90.50\% |       0.2744 |          0.0100 |
+|       7 |        2060 |       00:00:47 |       93.50\% |       0.2710 |          0.0100 |
+|       7 |        2070 |       00:00:47 |       91.50\% |       0.2568 |          0.0100 |
+|       7 |        2080 |       00:00:47 |       91.00\% |       0.2908 |          0.0100 |
+|       7 |        2090 |       00:00:47 |       92.00\% |       0.2604 |          0.0100 |
+|       7 |        2100 |       00:00:47 |       90.00\% |       0.2591 |          0.0100 |
+|       8 |        2110 |       00:00:47 |       93.00\% |       0.2587 |          0.0100 |
+|       8 |        2120 |       00:00:48 |       91.00\% |       0.2870 |          0.0100 |
+|       8 |        2130 |       00:00:48 |       95.50\% |       0.1963 |          0.0100 |
+|       8 |        2140 |       00:00:48 |       93.50\% |       0.2426 |          0.0100 |
+|       8 |        2150 |       00:00:48 |       91.00\% |       0.3074 |          0.0100 |
+|       8 |        2160 |       00:00:48 |       94.00\% |       0.2436 |          0.0100 |
+|       8 |        2170 |       00:00:48 |       90.00\% |       0.2717 |          0.0100 |
+|       8 |        2180 |       00:00:48 |       90.00\% |       0.3394 |          0.0100 |
+|       8 |        2190 |       00:00:49 |       92.00\% |       0.3114 |          0.0100 |
+|       8 |        2200 |       00:00:49 |       93.00\% |       0.2969 |          0.0100 |
+|       8 |        2210 |       00:00:49 |       92.00\% |       0.3449 |          0.0100 |
+|       8 |        2220 |       00:00:49 |       94.00\% |       0.2908 |          0.0100 |
+|       8 |        2230 |       00:00:49 |       91.00\% |       0.2853 |          0.0100 |
+|       8 |        2240 |       00:00:49 |       95.50\% |       0.1875 |          0.0100 |
+|       8 |        2250 |       00:00:49 |       94.50\% |       0.2357 |          0.0100 |
+|       8 |        2260 |       00:00:50 |       94.50\% |       0.3160 |          0.0100 |
+|       8 |        2270 |       00:00:50 |       94.50\% |       0.1964 |          0.0100 |
+|       8 |        2280 |       00:00:50 |       94.00\% |       0.2332 |          0.0100 |
+|       8 |        2290 |       00:00:50 |       92.00\% |       0.3211 |          0.0100 |
+|       8 |        2300 |       00:00:50 |       92.50\% |       0.2475 |          0.0100 |
+|       8 |        2310 |       00:00:50 |       93.50\% |       0.2233 |          0.0100 |
+|       8 |        2320 |       00:00:50 |       94.00\% |       0.2489 |          0.0100 |
+|       8 |        2330 |       00:00:51 |       91.00\% |       0.3143 |          0.0100 |
+|       8 |        2340 |       00:00:51 |       91.00\% |       0.2539 |          0.0100 |
+|       8 |        2350 |       00:00:51 |       91.00\% |       0.2746 |          0.0100 |
+|       8 |        2360 |       00:00:51 |       93.50\% |       0.2681 |          0.0100 |
+|       8 |        2370 |       00:00:51 |       91.50\% |       0.2543 |          0.0100 |
+|       8 |        2380 |       00:00:51 |       91.00\% |       0.2881 |          0.0100 |
+|       8 |        2390 |       00:00:51 |       92.00\% |       0.2564 |          0.0100 |
+|       8 |        2400 |       00:00:52 |       90.50\% |       0.2556 |          0.0100 |
+|       9 |        2410 |       00:00:52 |       93.50\% |       0.2549 |          0.0100 |
+|       9 |        2420 |       00:00:52 |       90.50\% |       0.2875 |          0.0100 |
+|       9 |        2430 |       00:00:52 |       95.50\% |       0.1933 |          0.0100 |
+|       9 |        2440 |       00:00:52 |       93.50\% |       0.2414 |          0.0100 |
+|       9 |        2450 |       00:00:52 |       91.00\% |       0.3025 |          0.0100 |
+|       9 |        2460 |       00:00:52 |       94.00\% |       0.2411 |          0.0100 |
+|       9 |        2470 |       00:00:53 |       90.00\% |       0.2671 |          0.0100 |
+|       9 |        2480 |       00:00:53 |       90.50\% |       0.3353 |          0.0100 |
+|       9 |        2490 |       00:00:53 |       92.50\% |       0.3089 |          0.0100 |
+|       9 |        2500 |       00:00:53 |       93.00\% |       0.2943 |          0.0100 |
+|       9 |        2510 |       00:00:53 |       92.00\% |       0.3398 |          0.0100 |
+|       9 |        2520 |       00:00:53 |       94.00\% |       0.2873 |          0.0100 |
+|       9 |        2530 |       00:00:53 |       91.50\% |       0.2840 |          0.0100 |
+|       9 |        2540 |       00:00:53 |       95.50\% |       0.1853 |          0.0100 |
+|       9 |        2550 |       00:00:54 |       94.50\% |       0.2341 |          0.0100 |
+|       9 |        2560 |       00:00:54 |       94.50\% |       0.3136 |          0.0100 |
+|       9 |        2570 |       00:00:54 |       94.50\% |       0.1949 |          0.0100 |
+|       9 |        2580 |       00:00:54 |       94.00\% |       0.2316 |          0.0100 |
+|       9 |        2590 |       00:00:54 |       92.50\% |       0.3185 |          0.0100 |
+|       9 |        2600 |       00:00:54 |       93.50\% |       0.2448 |          0.0100 |
+|       9 |        2610 |       00:00:54 |       93.50\% |       0.2209 |          0.0100 |
+|       9 |        2620 |       00:00:55 |       94.00\% |       0.2473 |          0.0100 |
+|       9 |        2630 |       00:00:55 |       90.50\% |       0.3114 |          0.0100 |
+|       9 |        2640 |       00:00:55 |       92.00\% |       0.2506 |          0.0100 |
+|       9 |        2650 |       00:00:55 |       91.50\% |       0.2749 |          0.0100 |
+|       9 |        2660 |       00:00:55 |       93.50\% |       0.2653 |          0.0100 |
+|       9 |        2670 |       00:00:55 |       91.00\% |       0.2523 |          0.0100 |
+|       9 |        2680 |       00:00:55 |       91.50\% |       0.2858 |          0.0100 |
+|       9 |        2690 |       00:00:56 |       92.00\% |       0.2529 |          0.0100 |
+|       9 |        2700 |       00:00:56 |       90.50\% |       0.2528 |          0.0100 |
+|      10 |        2710 |       00:00:56 |       93.50\% |       0.2517 |          0.0100 |
+|      10 |        2720 |       00:00:56 |       90.50\% |       0.2880 |          0.0100 |
+|      10 |        2730 |       00:00:56 |       95.50\% |       0.1910 |          0.0100 |
+|      10 |        2740 |       00:00:56 |       93.50\% |       0.2405 |          0.0100 |
+|      10 |        2750 |       00:00:57 |       91.00\% |       0.2984 |          0.0100 |
+|      10 |        2760 |       00:00:57 |       94.50\% |       0.2387 |          0.0100 |
+|      10 |        2770 |       00:00:57 |       90.50\% |       0.2631 |          0.0100 |
+|      10 |        2780 |       00:00:57 |       90.50\% |       0.3321 |          0.0100 |
+|      10 |        2790 |       00:00:57 |       92.50\% |       0.3067 |          0.0100 |
+|      10 |        2800 |       00:00:57 |       93.50\% |       0.2921 |          0.0100 |
+|      10 |        2810 |       00:00:57 |       92.00\% |       0.3353 |          0.0100 |
+|      10 |        2820 |       00:00:58 |       94.00\% |       0.2842 |          0.0100 |
+|      10 |        2830 |       00:00:58 |       91.50\% |       0.2829 |          0.0100 |
+|      10 |        2840 |       00:00:58 |       95.50\% |       0.1836 |          0.0100 |
+|      10 |        2850 |       00:00:58 |       94.50\% |       0.2327 |          0.0100 |
+|      10 |        2860 |       00:00:58 |       94.50\% |       0.3116 |          0.0100 |
+|      10 |        2870 |       00:00:58 |       94.50\% |       0.1937 |          0.0100 |
+|      10 |        2880 |       00:00:58 |       94.00\% |       0.2303 |          0.0100 |
+|      10 |        2890 |       00:00:59 |       92.50\% |       0.3164 |          0.0100 |
+|      10 |        2900 |       00:00:59 |       93.50\% |       0.2426 |          0.0100 |
+|      10 |        2910 |       00:00:59 |       93.50\% |       0.2188 |          0.0100 |
+|      10 |        2920 |       00:00:59 |       94.00\% |       0.2458 |          0.0100 |
+|      10 |        2930 |       00:00:59 |       90.50\% |       0.3089 |          0.0100 |
+|      10 |        2940 |       00:00:59 |       92.00\% |       0.2480 |          0.0100 |
+|      10 |        2950 |       00:00:59 |       92.00\% |       0.2753 |          0.0100 |
+|      10 |        2960 |       00:01:00 |       94.00\% |       0.2629 |          0.0100 |
+|      10 |        2970 |       00:01:00 |       91.00\% |       0.2507 |          0.0100 |
+|      10 |        2980 |       00:01:00 |       91.50\% |       0.2837 |          0.0100 |
+|      10 |        2990 |       00:01:00 |       92.00\% |       0.2499 |          0.0100 |
+|      10 |        3000 |       00:01:00 |       91.00\% |       0.2504 |          0.0100 |
+|========================================================================================|
+
+    \end{Verbatim}
+
+    \includegraphics{f_train.png}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{c}{\PYZpc{}\PYZpc{}testing }
+        \PY{n}{clear}\PY{p}{;}
+        \PY{n+nb}{disp}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{starting the testing phase ......\PYZsq{}}\PY{p}{)}
+        \PY{n}{load}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{f\PYZus{}network.mat\PYZsq{}}\PY{p}{)}
+        \PY{n}{load}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{MNIST\PYZus{}test\PYZus{}img.mat\PYZsq{}}\PY{p}{)}\PY{p}{;}
+        \PY{n}{load}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{MNIST\PYZus{}test\PYZus{}label.mat\PYZsq{}}\PY{p}{)}\PY{p}{;}
+        \PY{p}{[}\PY{n}{m}\PY{p}{,}\PY{n}{n}\PY{p}{,}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{]}\PY{p}{=}\PY{n+nb}{size}\PY{p}{(}\PY{n}{test\PYZus{}images}\PY{p}{)}\PY{p}{;}
+        \PY{n}{u}\PY{p}{=}\PY{n}{unique}\PY{p}{(}\PY{n}{test\PYZus{}labels}\PY{p}{)}\PY{p}{;}
+        \PY{k}{for} \PY{n+nb}{i}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n+nb}{size}\PY{p}{(}\PY{n}{u}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}
+            \PY{n}{cu}\PY{p}{\PYZob{}}\PY{n+nb}{i}\PY{p}{\PYZcb{}}\PY{p}{=}\PY{n}{strcat}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{c\PYZsq{}}\PY{p}{,}\PY{n}{num2str}\PY{p}{(}\PY{n}{u}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+        \PY{n}{test\PYZus{}target}\PY{p}{=}\PY{n}{categorical}\PY{p}{(}\PY{n}{test\PYZus{}labels}\PY{p}{,}\PY{n}{u}\PY{p}{,}\PY{n}{cu}\PY{p}{)}\PY{p}{;}
+        \PY{n}{p}\PY{p}{=}\PY{n}{predict}\PY{p}{(}\PY{n}{net\PYZus{}pop}\PY{p}{,}\PY{n}{test\PYZus{}images}\PY{p}{)}\PY{p}{;}
+        \PY{p}{[}\PY{n}{v}\PY{p}{,}\PY{n}{p}\PY{p}{]}\PY{p}{=}\PY{n}{max}\PY{p}{(}\PY{n}{p}\PY{o}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+        \PY{n}{acc}\PY{p}{=}\PY{p}{(}\PY{n}{sum}\PY{p}{(}\PY{n}{p}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{o}{==}\PY{n}{test\PYZus{}labels}\PY{p}{)}\PY{o}{/}\PY{n+nb}{size}\PY{p}{(}\PY{n}{test\PYZus{}labels}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{;}
+        \PY{n+nb}{disp}\PY{p}{(}\PY{n}{strcat}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{Accuracy is :\PYZsq{}}\PY{p}{,}\PY{n}{char}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s}{\PYZsq{}}\PY{l+s}{ \PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}\PY{p}{,}\PY{n}{num2str}\PY{p}{(}\PY{n}{acc}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+starting the testing phase {\ldots}
+Accuracy is :92.19
+
+    \end{Verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
